@@ -1,9 +1,6 @@
 package bruff.eventuff.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -15,11 +12,25 @@ public class Evento {
     private Long id;
     private String nome;
     private String descricao;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "evento_palestrante",
+        joinColumns = @JoinColumn(name = "evento_id"),
+        inverseJoinColumns = @JoinColumn(name = "pessoa_id")
+    )
     private List<Pessoa> palestrantes;
+
     private LocalDate data;
     private LocalTime horario;
     private String categoria;
     private int vagas;
+    @ManyToMany
+    @JoinTable(
+        name = "evento_inscrito",
+        joinColumns = @JoinColumn(name = "evento_id"),
+        inverseJoinColumns = @JoinColumn(name = "pessoa_id")
+    )
     private List<Pessoa> inscritos; //mudar tipo Pessoa para Usuário que na vdd herda Pessoa
 
     public Evento(){

@@ -2,6 +2,7 @@ package bruff.eventuff.model;
 
 import javax.persistence.*;
 import java.util.List;
+
 @Entity
 public class CategoriaEvento {
     @Id
