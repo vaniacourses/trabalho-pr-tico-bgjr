@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Entity
+@Table(name = "evento")
 public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
