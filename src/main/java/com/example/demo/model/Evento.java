@@ -15,18 +15,14 @@ public class Evento {
     private Long id;
     private String nome;
     private String descricao;
-
-    @ManyToMany
-    @JoinTable(name = "evento_palestrante", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "pessoa_id"))
-    private List<Pessoa> palestrantes;
-
+    private String palestrante;
     private LocalDate data;
     private LocalTime horario;
     private String categoria;
     private int vagas;
     @ManyToMany
-    @JoinTable(name = "evento_inscrito", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "pessoa_id"))
-    private List<Pessoa> inscritos; // mudar tipo Pessoa para Usuário que na vdd herda Pessoa
+    @JoinTable(name = "evento_inscrito", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    private List<Usuario> inscritos;
 
     public Evento() {
 
@@ -57,12 +53,12 @@ public class Evento {
         this.descricao = descricao;
     }
 
-    public List<Pessoa> getPalestrantes() {
-        return palestrantes;
+    public String getPalestrante() {
+        return palestrante;
     }
 
-    public void setPalestrantes(List<Pessoa> palestrantes) {
-        this.palestrantes = palestrantes;
+    public void setPalestrante(String palestrante) {
+        this.palestrante = palestrante;
     }
 
     public LocalDate getData() {
@@ -97,11 +93,11 @@ public class Evento {
         this.vagas = vagas;
     }
 
-    public List<Pessoa> getInscritos() {
+    public List<Usuario> getInscritos() {
         return inscritos;
     }
 
-    public void setInscritos(List<Pessoa> inscritos) {
+    public void setInscritos(List<Usuario> inscritos) {
         this.inscritos = inscritos;
     }
 }

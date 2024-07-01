@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabrica de Evento - EventUFF</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <script th:src="@{/script.js}"></script>
+</head>
+<body>
+<h1>Gerenciamento de eventos</h1>
+
+<section id="add-event">
+    <h2>Adicionar Evento</h2>
+    <form id="event-form">
+        <label for="event-name">Nome Evento:</label>
+        <input type="text" id="event-name" name="event-name" required>
+        <br>
+        <label for="event-description">Descrição:</label>
+        <textarea id="event-description" name="event-description" required></textarea>
+        <br>
+        <label for="event-date">Data Evento:</label>
+        <input type="date" id="event-date" name="event-date" required>
+        <br>
+        <label for="event-time">Horário Evento:</label>
+        <input type="time" id="event-time" name="event-time" required>
+        <br>
+        <label for="event-vacancies">Vagas:</label>
+        <input type="number" id="event-vacancies" name="event-vacancies" required>
+        <br>
+        <label for="event-type">Tipo Evento:</label>
+        <select id="event-category" name="event-category">
+            <option value="palestra">Palestra</option>
+            <option value="minicurso">Mini Curso</option>
+            <option value="maratona">Maratona</option>
+        </select>
+        <br>
+        <button type="submit">Adicionar Evento</button>
+    </form>
+</section>
+
+<section id="register-user">
+    <h2>Registrar Usuários</h2>
+    <form id="user-form">
+        <label for="user-name">Nome usuário:</label>
+        <input type="text" id="user-name" name="user-name" required>
+        <br>
+        <label for="user-email">Email:</label>
+        <input type="email" id="user-email" name="user-email" required>
+        <br>
+        <button type="submit">Registrar Usuário</button>
+    </form>
+</section>
+
+<section id="list-events">
+    <h2>Listar Eventos</h2>
+    <button id="list-events-btn">Listar Eventos</button>
+    <ul id="events-list"></ul>
+</section>
+
+</body>
+</html>

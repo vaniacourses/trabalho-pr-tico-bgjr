@@ -5,9 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/")
 public class CatalogoController {
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public String index (){
         return "homePage";
     }
