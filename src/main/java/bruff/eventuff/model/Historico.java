@@ -3,9 +3,13 @@ package bruff.eventuff.model;
 import javax.persistence.Entity;
 
 import javax.persistence.OneToOne;
+
+import jakarta.persistence.Table;
+
 import java.math.BigDecimal;
 import java.util.List;
 
+@Table(name = "historico")
 @Entity
 public class Historico {
     @OneToOne

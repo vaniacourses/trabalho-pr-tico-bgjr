@@ -10,6 +10,7 @@ public class Usuario extends Pessoa {
     private String email;
     private String password;
     private String role;
+    private Long id;
 
     public Usuario() {
         super();
@@ -38,5 +39,13 @@ public class Usuario extends Pessoa {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
