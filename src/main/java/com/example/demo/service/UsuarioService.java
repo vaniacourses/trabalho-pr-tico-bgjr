@@ -16,4 +16,7 @@ public class UsuarioService {
     public List<Usuario> findAll(){
         return usuarioRepository.findAll();
     }
+    public Usuario autenticaUsuario(String login, String password){
+        return usuarioRepository.autenticaUsuario(login, password);
+    }
 }

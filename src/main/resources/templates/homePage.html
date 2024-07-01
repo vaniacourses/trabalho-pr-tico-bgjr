@@ -13,13 +13,6 @@
         <div class="container" style="width: 40px"></div>
         <a class="navbar-brand" href="/home" style="font-size: 35px; font-family:'Helvetica Neue'">EventUFF</a>
 
-        <!--
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-light" type="submit">Search</button>
-        </form>
-        -->
-
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu"
                 aria-controls="menu" aria-expanded="false" aria-label="Botão de navegação">
             <span class="navbar-toggler-icon"></span>
@@ -27,10 +20,8 @@
 
         <div class="collapse navbar-collapse" id="menu">
             <div class="navbar-nav">
-                <div class="container" style="width: 950px"></div>
-                <a class="nav-item nav-link" href="usuario/coord/registrar" style="font-size: 19px; font-family:'Helvetica Neue'">+ Evento</a>
-                <a class="nav-item nav-link" href="usuario/coord/listar" style="font-size: 19px; font-family:'Helvetica Neue'">Usuários</a>
-                <a class="nav-item nav-link" th:href="@{loginPage}" style="font-size: 19px; font-family:'Helvetica Neue'">Login</a>
+                <div class="container" style="width: 1090px"></div>
+                <a class="nav-item nav-link" href="/loginPage" style="font-size: 19px; font-family:'Helvetica Neue'">Login</a>
             </div>
         </div>
     </div>
@@ -40,5 +31,44 @@
 <br>
 <br>
 <br>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <br>
+            <h1>Catálogo de eventos</h1>
+            <br>
+            <form class="d-flex" role="search" style="width: 400px">
+                <input class="form-control me-2" type="search" placeholder="Digite o nome de um evento...">
+                <button class="btn btn-outline-dark" type="submit">Buscar</button>
+            </form>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Palestrante</th>
+                    <th>Data</th>
+                    <th>Horário</th>
+                    <th>Vagas</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${eventos.isEmpty()}">
+                    <td colspan="2">Nenhum evento disponível</td>
+                </tr>
+                <tr th:each="evento : ${eventos}">
+                    <td><span th:text="${evento.getNome()}">Nome</span></td>
+                    <td><span th:text="${evento.getDescricao()}">Descrição</span></td>
+                    <td><span th:text="${evento.getPalestrante()}">Palestrante</span></td>
+                    <td><span th:text="${evento.getData()}">Data</span></td>
+                    <td><span th:text="${evento.getHorario()}">Horário</span></td>
+                    <td><span th:text="${evento.getVagas()}">Vagas</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 </body>

@@ -1,28 +1,44 @@
 package com.example.demo.model;
 
-import javax.persistence.Entity;
 
-import javax.persistence.OneToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 public class Historico {
+    @Id
+    private Long id;
     @OneToOne
-    private Long idUsuario;
+    private Usuario usuario;
+    @OneToMany
     private List<Evento> incricoes;
+    @OneToMany
     private List<Certificado> certificados;
     private BigDecimal cargaHoraria;
 
     public Historico(){
 
     }
-    public Long getIdUsuario() {
-        return idUsuario;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public List<Evento> getIncricoes() {

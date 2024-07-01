@@ -4,6 +4,10 @@ public class UserAuth {
     private String login;
     private String password;
 
+    public UserAuth(){
+
+    }
+
     public String getLogin() {
         return login;
     }
