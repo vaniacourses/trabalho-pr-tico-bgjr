@@ -3,11 +3,13 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-public class Usuario extends UserAuth{
+public class Usuario{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    private String login;
+    private String password;
     private String email;
     private String role; //aluno ou coord
 
@@ -45,5 +47,21 @@ public class Usuario extends UserAuth{
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
