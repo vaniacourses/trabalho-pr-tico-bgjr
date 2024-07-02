@@ -38,8 +38,8 @@
             <br>
             <h1>Catálogo de eventos</h1>
             <br>
-            <form class="d-flex" role="search" style="width: 400px">
-                <input class="form-control me-2" type="search" placeholder="Digite o nome de um evento...">
+            <form class="d-flex" role="search" id="search-form" style="width: 400px">
+                <input class="form-control me-2" type="search" id="search-input" placeholder="Digite o nome de um evento...">
                 <button class="btn btn-outline-dark" type="submit">Buscar</button>
             </form>
             <table class="table table-striped">
@@ -53,9 +53,9 @@
                     <th>Vagas</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="event-table-body">
                 <tr th:if="${eventos.isEmpty()}">
-                    <td colspan="2">Nenhum evento disponível</td>
+                    <td colspan="6">Nenhum evento disponível</td>
                 </tr>
                 <tr th:each="evento : ${eventos}">
                     <td><span th:text="${evento.getNome()}">Nome</span></td>
@@ -71,4 +71,51 @@
     </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const searchForm = document.getElementById("search-form");
+    const searchInput = document.getElementById("search-input");
+    const eventTableBody = document.getElementById("event-table-body");
+
+    if (searchForm) {
+        searchForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const searchQuery = searchInput.value;
+
+            fetch(`/api/events/search?nome=${encodeURIComponent(searchQuery)}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(response => response.json())
+            .then(events => {
+                eventTableBody.innerHTML = ""; // Clear existing rows
+                if (events.length > 0) {
+                    events.forEach(event => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${event.nome}</td>
+                            <td>${event.descricao}</td>
+                            <td>${event.palestrante}</td>
+                            <td>${event.data}</td>
+                            <td>${event.horario}</td>
+                            <td>${event.vagas}</td>
+                        `;
+                        eventTableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement("tr");
+                    row.innerHTML = '<td colspan="6">Nenhum evento disponível</td>';
+                    eventTableBody.appendChild(row);
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert("Erro ao buscar eventos.");
+            });
+        });
+    }
+});
+</script>
+
 </body>
+</html>

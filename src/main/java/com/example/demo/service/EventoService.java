@@ -59,4 +59,8 @@ public class EventoService {
         target.setCategoria(source.getCategoria());
         target.setVagas(source.getVagas());
     }
+
+    public List<Evento> getEventoByNome(String nome) {
+        return eventoRepository.findByNomeContainingIgnoreCase(nome);
+    }
 }

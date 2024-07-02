@@ -39,4 +39,9 @@ public class EventoController {
     public void deleteEvento(@PathVariable Long id) {
         eventoService.deleteEvento(id);
     }
+
+    @GetMapping("/search")
+    public List<Evento> searchEvents(@RequestParam String nome) {
+        return eventoService.getEventoByNome(nome);
+    }
 }
