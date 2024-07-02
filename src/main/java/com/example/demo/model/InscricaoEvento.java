@@ -11,6 +11,8 @@ public class InscricaoEvento {
     private Long id;
     @ManyToOne
     private Usuario usuario;
+    @ManyToOne
+    private Evento evento;
     private LocalDate dataInscricao;
     private String situacao; //inscrito, concluido
 
@@ -32,6 +34,14 @@ public class InscricaoEvento {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
 
     public LocalDate getDataInscricao() {

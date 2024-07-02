@@ -4,6 +4,7 @@ import com.example.demo.model.Evento;
 import com.example.demo.model.UserAuth;
 import com.example.demo.model.Usuario;
 import com.example.demo.service.EventoService;
+import com.example.demo.service.InscricaoFacade;
 import com.example.demo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class UsuarioController {
     @Autowired
     private EventoService eventoService;
 
+    @Autowired
+    private InscricaoFacade inscricaoFacade;
+
     @PostMapping("/auth")
     public String autenticaUsuario(UserAuth userAuth, RedirectAttributes attributes, Model model){
         Usuario usuario = usuarioService.autenticaUsuario(userAuth.getLogin(), userAuth.getPassword());
@@ -43,6 +47,11 @@ public class UsuarioController {
             return "aluno/catalogoAluno";
         }
         return "coord/catalogoCoord";
+    }
+
+    @PostMapping("/auth/inscricao")
+    public String inscricao (Evento evento, Usuario usuario, RedirectAttributes attributes){
+        return inscricaoFacade.inscricaoFacade(evento, usuario, attributes);
     }
 
     @RequestMapping("/auth/listar")
