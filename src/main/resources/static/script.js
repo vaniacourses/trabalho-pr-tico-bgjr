@@ -11,11 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const eventDescription = document.getElementById("event-description").value;
             const eventDate = document.getElementById("event-date").value;
             const eventTime = document.getElementById("event-time").value;
-            const eventCategory = document.getElementById("event-category").value; // Changed ID to event-category
+            const eventCategory = document.getElementById("event-category").value;
             const eventVacancies = document.getElementById("event-vacancies").value;
 
-            // Call your backend API to add the event
-            fetch("/api/events", {  // Ensure the endpoint matches your controller
+            fetch("/api/events", {  
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -25,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     descricao: eventDescription,
                     data: eventDate,
                     horario: eventTime,
-                    categoria: eventCategory, // Use the selected event type as category
+                    categoria: eventCategory,
                     vagas: eventVacancies
                 })
             }).then(response => {

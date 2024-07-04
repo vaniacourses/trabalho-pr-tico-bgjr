@@ -1,20 +1,28 @@
 package com.example.demo.service;
 
+import com.example.demo.factory.EventoFactory;
+import com.example.demo.factory.MaratonaFactory;
+import com.example.demo.factory.MiniCursoFactory;
+import com.example.demo.factory.PalestraFactory;
 import com.example.demo.model.Evento;
-import com.example.demo.model.Palestra;
-import com.example.demo.model.MiniCurso;
-import com.example.demo.model.Maratona;
 import com.example.demo.repository.EventoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Map;
+import java.util.HashMap;
 
 import java.util.List;
 
 @Service
 public class EventoService {
 
+    private Map<String, EventoFactory> factoryMap;
+
+
     @Autowired
     private EventoRepository eventoRepository;
+
 
     public List<Evento> getAllEventos() {
         return eventoRepository.findAll();
@@ -32,26 +40,24 @@ public class EventoService {
         eventoRepository.deleteById(id);
     }
 
-    public Evento createEvento(Evento evento) {
-        switch (evento.getCategoria().toLowerCase()) {
-            case "palestra":
-                Palestra palestra = new Palestra();
-                copyEventoFields(evento, palestra);
-                return saveOrUpdateEvento(palestra);
-            case "minicurso":
-                MiniCurso miniCurso = new MiniCurso();
-                copyEventoFields(evento, miniCurso);
-                return saveOrUpdateEvento(miniCurso);
-            case "maratona":
-                Maratona maratona = new Maratona();
-                copyEventoFields(evento, maratona);
-                return saveOrUpdateEvento(maratona);
-            default:
-                throw new IllegalArgumentException("Invalid event type");
-        }
+    public EventoService() {
+        factoryMap = new HashMap<>();
+        factoryMap.put("palestra", new PalestraFactory());
+        factoryMap.put("minicurso", new MiniCursoFactory());
+        factoryMap.put("maratona", new MaratonaFactory());
     }
 
-    private void copyEventoFields(Evento source, Evento target) {
+    public Evento createEvento(Evento evento) {
+        EventoFactory factory = factoryMap.get(evento.getCategoria().toLowerCase());
+        if (factory == null) {
+            throw new IllegalArgumentException("Invalid event type");
+        }
+        Evento newEvento = factory.createEvento(evento);
+        copyEventoFields(evento, newEvento);
+        return saveOrUpdateEvento(newEvento);
+    }
+
+    public static void copyEventoFields(Evento source, Evento target) {
         target.setNome(source.getNome());
         target.setDescricao(source.getDescricao());
         target.setData(source.getData());
