@@ -19,10 +19,18 @@ public class EventoService {
 
     private Map<String, EventoFactory> factoryMap;
 
-
     @Autowired
     private EventoRepository eventoRepository;
 
+    public Evento createEvento(Evento evento) {
+        EventoFactory factory = factoryMap.get(evento.getCategoria().toLowerCase());
+        if (factory == null) {
+            throw new IllegalArgumentException("Invalid event type");
+        }
+        Evento newEvento = factory.createEvento(evento);
+        copyEventoFields(evento, newEvento);
+        return saveOrUpdateEvento(newEvento);
+    }
 
     public List<Evento> getAllEventos() {
         return eventoRepository.findAll();
@@ -45,16 +53,6 @@ public class EventoService {
         factoryMap.put("palestra", new PalestraFactory());
         factoryMap.put("minicurso", new MiniCursoFactory());
         factoryMap.put("maratona", new MaratonaFactory());
-    }
-
-    public Evento createEvento(Evento evento) {
-        EventoFactory factory = factoryMap.get(evento.getCategoria().toLowerCase());
-        if (factory == null) {
-            throw new IllegalArgumentException("Invalid event type");
-        }
-        Evento newEvento = factory.createEvento(evento);
-        copyEventoFields(evento, newEvento);
-        return saveOrUpdateEvento(newEvento);
     }
 
     public static void copyEventoFields(Evento source, Evento target) {

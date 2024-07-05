@@ -11,7 +11,7 @@ public class MaratonaFactory extends EventoFactory {
         return maratona;
     }
 
-    private void copyEventoFields(Evento source, Evento target) {
+    protected void copyEventoFields(Evento source, Evento target) {
         target.setNome(source.getNome());
         target.setDescricao(source.getDescricao());
         target.setData(source.getData());

@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.model.Evento;
 import com.example.demo.service.EventoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,13 +25,8 @@ public class EventoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createEvento(@RequestBody Evento evento) {
-        try {
-            Evento createdEvento = eventoService.createEvento(evento);
-            return ResponseEntity.ok(createdEvento);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public Evento createEvento(@RequestBody Evento evento) {
+        return eventoService.createEvento(evento);
     }
 
     @PutMapping("/{id}")

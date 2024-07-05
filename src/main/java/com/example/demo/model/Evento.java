@@ -24,11 +24,14 @@ public class Evento {
     @JoinTable(name = "evento_inscrito", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
     private List<Usuario> inscritos;
 
-    public Evento() {
+    public Evento() {}
 
+    public Evento(Long id, String nome, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -99,5 +102,9 @@ public class Evento {
 
     public void setInscritos(List<Usuario> inscritos) {
         this.inscritos = inscritos;
+    }
+
+    public String getDetalhes() {
+        return "Evento: " + nome + ", Descrição: " + descricao;
     }
 }

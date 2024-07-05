@@ -11,7 +11,8 @@ public class MiniCursoFactory extends EventoFactory {
         return miniCurso;
     }
 
-    private void copyEventoFields(Evento source, Evento target) {
+    @SuppressWarnings("unused")
+    protected void copyEventoFields(Evento source, Evento target) {
         target.setNome(source.getNome());
         target.setDescricao(source.getDescricao());
         target.setData(source.getData());

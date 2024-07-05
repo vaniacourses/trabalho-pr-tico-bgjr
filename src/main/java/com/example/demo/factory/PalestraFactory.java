@@ -11,7 +11,8 @@ public class PalestraFactory extends EventoFactory {
         return palestra;
     }
 
-    private void copyEventoFields(Evento source, Evento target) {
+    @SuppressWarnings("unused")
+    protected void copyEventoFields(Evento source, Evento target) {
         target.setNome(source.getNome());
         target.setDescricao(source.getDescricao());
         target.setData(source.getData());
