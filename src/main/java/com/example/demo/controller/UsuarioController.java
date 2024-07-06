@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -29,12 +30,15 @@ public class UsuarioController {
     @Autowired
     private InscricaoFacade inscricaoFacade;
 
+    private Usuario usuario;
+    private List<Evento> eventos;
+
     @PostMapping("/auth")
     public String autenticaUsuario(UserAuth userAuth, RedirectAttributes attributes, Model model){
-        Usuario usuario = usuarioService.autenticaUsuario(userAuth.getLogin(), userAuth.getPassword());
+        this.usuario = usuarioService.autenticaUsuario(userAuth.getLogin(), userAuth.getPassword());
         if (usuario != null){
-            List<Evento> eventos = eventoService.getAllEventos();
-            return indexAuth(model, usuario, eventos);
+            this.eventos = eventoService.getAllEventos();
+            return indexAuth(model, this.usuario, this.eventos);
         }
         attributes.addFlashAttribute("authError", "Usuário não encontrado :(");
         return "redirect:/loginPage";
@@ -50,8 +54,19 @@ public class UsuarioController {
     }
 
     @PostMapping("/auth/inscricao")
-    public String inscricao (Evento evento, Usuario usuario, RedirectAttributes attributes){
-        return inscricaoFacade.inscricaoFacade(evento, usuario, attributes);
+    public String inscricao (@RequestParam Long id, Model model, RedirectAttributes attributes){
+        Evento evento = eventoService.getEventoById(id);
+
+        boolean inscricaoBemSucedida = inscricaoFacade.inscricaoFacade(evento, this.usuario);
+        this.eventos = eventoService.getAllEventos();
+        model.addAttribute("usuario", this.usuario);
+        model.addAttribute("eventos", this.eventos);
+        /*if (!inscricaoBemSucedida){
+            attributes.addFlashAttribute("authError", "Não foi possível efetuar a inscrição!");
+        }
+        */
+        System.out.println(inscricaoBemSucedida);
+        return "aluno/catalogoAluno";
     }
 
     @RequestMapping("/auth/listar")

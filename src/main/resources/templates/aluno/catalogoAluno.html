@@ -67,14 +67,12 @@
                     <td><span th:text="${evento.getData()}">Data</span></td>
                     <td><span th:text="${evento.getHorario()}">Horário</span></td>
                     <td><span th:text="${evento.getVagas()}">Vagas</span></td>
-                    <!--
-                    <form th:action="@{/usuario/auth/inscricao}" th:object="${evento}" method="post">
-                        <div th:object="${usuario}">
-                            <td><span><button type="submit" class="btn btn-outline-secondary btn-sm">Inscrever-se</button></span></td>
-                        </div>
-                    </form>
-                    -->
-                    <td><span><button type="submit" class="btn btn-outline-secondary btn-sm">Inscrever-se</button></span></td>
+                    <td>
+                        <form th:action="@{/usuario/auth/inscricao}" method="post">
+                            <input type="hidden" name="id" th:value="${evento.getId()}" />
+                            <button type="submit" class="btn btn-outline-secondary btn-sm">Inscrever-se</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>

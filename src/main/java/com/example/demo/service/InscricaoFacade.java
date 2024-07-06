@@ -23,16 +23,20 @@ public class InscricaoFacade {
     @Autowired
     private InscricaoEventoRepository inscricaoEventoRepository;
 
-    public String inscricaoFacade(Evento evento, Usuario usuario, RedirectAttributes attributes){
+    public boolean inscricaoFacade(Evento evento, Usuario usuario){
         if (evento.getVagas() > 0){
-            //verificar se usuario esta em evento.getInscritos()
+            if (evento.getInscritos().contains(usuario)){
+                return false; //o usuario ja esta inscrito
+            }
 
             int numero_vagas_antigo = evento.getVagas();
-            evento.setVagas(numero_vagas_antigo - 1); //atualiza numero de vagas do evento
+            evento.setVagas(numero_vagas_antigo - 1);
 
             List<Usuario> inscritos = evento.getInscritos();
             inscritos.add(usuario);
-            evento.setInscritos(inscritos); //atualiza lista de inscritos do evento
+            evento.setInscritos(inscritos);
+
+            eventoService.saveOrUpdateEvento(evento); //atualiza numero de vagas e lista de inscritos do evento
 
             InscricaoEvento entidadeInscricao = new InscricaoEvento();
             entidadeInscricao.setUsuario(usuario);
@@ -42,10 +46,9 @@ public class InscricaoFacade {
 
             entidadeInscricao = inscricaoEventoRepository.save(entidadeInscricao);
 
-            //adicionar inscricao a historico de usuario
-            return "aluno/catalogoAluno";
+            //adicionar entidadeInscricao a historico de usuario
+            return true;
         }
-        attributes.addFlashAttribute("authError", "Não há vagas disponíveis");
-        return "aluno/catalogoAluno";
+        return false;
     }
 }
