@@ -18,16 +18,11 @@ public class InscricaoFacade {
     private EventoService eventoService;
 
     @Autowired
-    private UsuarioService usuarioService;
-
-    @Autowired
     private InscricaoEventoRepository inscricaoEventoRepository;
 
     public boolean inscricaoFacade(Evento evento, Usuario usuario){
         if (evento.getVagas() > 0){
-            if (evento.getInscritos().contains(usuario)){
-                return false; //o usuario ja esta inscrito
-            }
+            //fazer verificacao se usuario nao ja esta inscrito
 
             int numero_vagas_antigo = evento.getVagas();
             evento.setVagas(numero_vagas_antigo - 1);
